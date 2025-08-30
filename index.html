@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yuvasri — Portfolio</title>
+  <meta name="description" content="Portfolio of Yuva Sri: projects, skills, resume, and contact." />
+  <meta property="og:title" content="Yuvasri — Portfolio" />
+  <meta property="og:description" content="Open-source personal profile and projects." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%230ea5e9'/%3E%3Ctext x='50' y='58' text-anchor='middle' font-size='58' fill='white' font-family='Arial, sans-serif'%3EY%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: #0f172a;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --brand: #0ea5e9; /* sky-500 */
+      --accent: #22c55e; /* green-500 */
+      --ring: rgba(14, 165, 233, 0.35);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #0ea5e944 0, transparent 60%),
+                  radial-gradient(800px 600px at 120% 10%, #22c55e22 0, transparent 50%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      letter-spacing: 0.2px;
+    }
+    a { color: var(--brand); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { width: min(1100px, 92%); margin: 0 auto; }
+    header {
+      position: sticky; top: 0; backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(11,18,32,0.9), rgba(11,18,32,0.65));
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      z-index: 50;
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .brand { display: inline-flex; gap: 10px; align-items: center; font-weight: 700; }
+    .brand .logo { width: 36px; height: 36px; border-radius: 12px; background: var(--brand); display: grid; place-items: center; color: white; font-weight: 800; }
+    .nav a { margin-left: 18px; color: var(--text); opacity: 0.9; }
+    .nav a:hover { opacity: 1; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px; background: var(--brand); color: #001018; font-weight: 700; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 8px 24px rgba(14,165,233,.25); }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(14,165,233,.3); }
+
+    /* Hero */
+    .hero { padding: 64px 0 28px; }
+    .hero-inner { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; align-items: center; }
+    .hero h1 { font-size: clamp(32px, 5vw, 52px); line-height: 1.1; margin: 12px 0 10px; }
+    .hero p { color: var(--muted); font-size: clamp(15px, 2.2vw, 18px); }
+    .chiprow { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 22px; }
+    .chip { padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: var(--muted); }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; padding: 18px; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+    .hero .photo { width: 200px;   /* reduce number for smaller image */
+  height: 200px;  aspect-ratio: 1/1; border-radius: 18px; background: url('yuva photo.jpg') center/cover no-repeat; border: 1px solid rgba(200,200,200,0.08); }
+
+    /* Sections */
+    section { padding: 42px 0; }
+    .section-title { font-size: 24px; margin: 0 0 14px; }
+    .grid { display: grid; gap: 16px; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+    /* Project cards */
+    .project { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .project h3 { margin: 0; font-size: 18px; }
+    .project p { margin: 0; color: var(--muted); font-size: 14px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag { font-size: 12px; padding: 4px 8px; border-radius: 999px; background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.25); }
+
+    .panel { background: var(--panel); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 18px; }
+
+    /* Footer */
+    footer { padding: 36px 0 64px; color: var(--muted); text-align: center; }
+
+    /* Forms */
+    .input, textarea.input { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.03); color: var(--text); outline: none; }
+    .input:focus { border-color: var(--brand); box-shadow: 0 0 0 6px var(--ring); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .grid.cols-3 { grid-template-columns: 1fr; }
+      .grid.cols-2 { grid-template-columns: 1fr; }
+      .nav a { margin-left: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <span class="logo">YS</span>
+        <span>Yuvasri</span>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+        <button class="btn" id="themeToggle" aria-label="Toggle theme">🌙 Theme</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <div class="chiprow">
+            <span class="chip">Open Source</span>
+            <span class="chip">Flask • JS • ML</span>
+            <span class="chip">India</span>
+          </div>
+          <h1>Hi, I'm <span style="color: var(--brand);">Yuvasri</span> 👋</h1>
+          <p>
+            I'm a software developer passionate about data science, web apps, and clean UI. I love building
+            open‑source projects that help people learn and grow.
+          </p>
+          <div style="display:flex; gap:10px; margin-top:18px; flex-wrap: wrap;">
+            <a class="btn" href="#projects">⭐ View Projects</a>
+            <a class="btn" style="background:transparent; color:var(--text); border:1px solid rgba(255,255,255,0.2); box-shadow:none;" href="#contact">✉️ Contact Me</a>
+          </div>
+        </div>
+        <div class="card photo" aria-label="Yuvasri portrait placeholder"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2 class="section-title">About</h2>
+      <div class="panel">
+        <p>
+          I am fresher in Python, C++, and building full‑stack apps with Flask, MySQL, HTML, CSS, and JavaScript.
+          Recently I worked on a <strong>Cancer Cell Classification</strong> ML project and a <strong>Career Guidance Tool</strong> web app.
+        </p>
+        <p>
+          I'm looking for opportunities where I can collaborate, learn fast, and ship useful features. When I'm not coding,
+          I enjoy mentoring friends on interview prep and polishing UI/UX details.
+        </p>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2 class="section-title">Skills</h2>
+      <div class="grid cols-3">
+        <div class="panel">
+          <h3>Languages</h3>
+          <p>Python, C++, JavaScript, SQL</p>
+        </div>
+        <div class="panel">
+          <h3>Frameworks & Tools</h3>
+          <p>Flask, Express, Node.js, MySQL, MongoDB</p>
+        </div>
+        <div class="panel">
+          <h3>ML & Data</h3>
+          <p>scikit‑learn, OpenCV, Pandas, NumPy</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS (auto-rendered from JSON below) -->
+    <section id="projects">
+      <h2 class="section-title">Projects</h2>
+      <div id="projectsGrid" class="grid cols-3"></div>
+    </section>
+
+    <!-- RESUME -->
+    <section id="resume">
+      <h2 class="section-title">Resume</h2>
+      <div class="panel">
+        <p>Download my resume as PDF:</p>
+        <p>
+          <a class="btn" href="resume.pdf" download>⬇️ Download Resume</a>
+          <span style="margin-left:10px; color:var(--muted); font-size:14px;"> <code></code> </span>
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="grid cols-2">
+        <form class="panel" id="contactForm">
+          <div style="display:grid; gap:10px;">
+            <input class="input" type="text" name="name" placeholder="Your name" required />
+            <input class="input" type="email" name="email" placeholder="Your email" required />
+            <textarea class="input" name="message" rows="5" placeholder="Your message" required></textarea>
+            <button class="btn" type="submit">Send Message</button>
+            <small style="color:var(--muted)">This uses your email app (mailto). For a backend-free form service, replace with Formspree or Basin.</small>
+          </div>
+        </form>
+        <div class="panel">
+          <h3>Links</h3>
+          <p>
+            <a href=" https://github.com/YuvasriS27." target="_blank" rel="noreferrer">GitHub</a> ·
+            <a href="https://www.linkedin.com/in/yuvi27/" target="_blank" rel="noreferrer">LinkedIn</a> ·
+            <a href="mailto: yuvasrisekaran02@gmail.com">Email</a>
+          </p>
+          <p>Location: India · Open to remote</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Yuvasri · Made with ❤️ · <a href="#" id="viewSource">View Source</a></p>
+      <p style="margin-top:6px">Licensed under <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer">MIT</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== EDIT YOUR PROFILE DATA HERE =====
+    const PROFILE = {
+      name: "Yuvasri",
+      role: "Software Developer",
+      email: " yuvasrisekaran02@gmail.com",
+      socials: {
+        github: "https://github.com/YuvasriS27",
+        linkedin: "https://www.linkedin.com/in/yuvi27/"
+      },
+      projects: [
+        {
+          title: "Career Guidance Tool",
+          desc: "Flask + MySQL web app that suggests careers based on assessments.",
+          url: "https://github.com/YuvasriS27/Career_Guidance_Tool",
+          tags: ["Flask", "MySQL", "HTML/CSS/JS"]
+        },
+        {
+          title: "Cancer Cell Classifier",
+          desc: "ML model with OpenCV data pipeline and Tkinter GUI.",
+          url: "https://github.com/YuvasriS27/cancer_cell_classifier",
+          tags: ["Python", "scikit-learn", "OpenCV"]
+        },
+        {
+          title: "Weather App",
+          desc: "Student/faculty leave workflow with multi-stage approvals.",
+          url: "https://github.com/YuvasriS27/python-projects/blob/main/weather.py",
+          tags: ["Flask"]
+        }
+      ]
+    };
+
+    // Render dynamic pieces
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelector('.brand span:last-child').textContent = PROFILE.name;
+
+    // Projects rendering
+    const grid = document.getElementById('projectsGrid');
+    PROFILE.projects.forEach(p => {
+      const card = document.createElement('article');
+      card.className = 'panel project';
+      card.innerHTML = `
+        <h3><a href="${p.url}" target="_blank" rel="noreferrer">${p.title} →</a></h3>
+        <p>${p.desc}</p>
+        <div class="tags">${p.tags.map(t=>`<span class='tag'>${t}</span>`).join('')}</div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // Simple source viewer (opens a new tab to view page source)
+    document.getElementById('viewSource').addEventListener('click', (e) => {
+      e.preventDefault();
+      const win = window.open('', '_blank');
+      win.document.write(`<pre>${escapeHtml(document.documentElement.outerHTML)}</pre>`);
+      win.document.close();
+    });
+
+    function escapeHtml(html){
+      return html.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+    }
+
+    // Contact form — mailto fallback (no backend required)
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const name = encodeURIComponent(data.get('name'));
+      const email = encodeURIComponent(data.get('email'));
+      const message = encodeURIComponent(data.get('message'));
+      const subject = encodeURIComponent(`Portfolio message from ${name}`);
+      const body = encodeURIComponent(`From: ${name} (%20${email})\n\n${decodeURIComponent(message)}`);
+      window.location.href = `mailto:${PROFILE.email}?subject=${subject}&body=${body}`;
+    });
+
+    // Theme toggle (dark default)
+    let dark = true;
+    const toggle = document.getElementById('themeToggle');
+    toggle.addEventListener('click', () => {
+      dark = !dark;
+      document.documentElement.style.filter = dark ? 'none' : 'invert(1) hue-rotate(180deg)';
+      toggle.textContent = dark ? '🌙 Theme' : '☀️ Theme';
+    });
+  </script>
+
+  <!--
+  MIT License
+  Copyright (c) 2025 Yuva Sri
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+  -->
+</body>
+</html>
